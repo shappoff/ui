@@ -24,6 +24,8 @@ import "@shappoff/ui/styles.css";
 
 Next.js: добавьте `transpilePackages: ["@shappoff/ui"]` в конфиг.
 
+**Vercel:** в проекте `.npmrc` с `${NODE_AUTH_TOKEN}` + Environment Variable `NODE_AUTH_TOKEN` (PAT) — см. [CONSUMER_SETUP.md → Часть C](./docs/CONSUMER_SETUP.md#часть-c-vercel-проект-потребитель).
+
 ## Примерные компоненты
 
 | Компонент | Назначение |
@@ -43,7 +45,7 @@ npm/
 │   └── publish.yml            # publish в GitHub Packages (release / tag v*)
 ├── docs/
 │   ├── GITHUB_SETUP.md        # GitHub, PAT, NODE_AUTH_TOKEN, публикация
-│   └── CONSUMER_SETUP.md      # установка локально и в CI потребителей
+│   └── CONSUMER_SETUP.md      # установка локально, в CI и на Vercel
 ├── src/
 │   ├── index.ts               # публичный API
 │   ├── styles.css             # CSS-переменные и стили компонентов
@@ -78,7 +80,7 @@ npm pack --dry-run   # проверить состав пакета
 | Документ | Содержание |
 |----------|------------|
 | [docs/GITHUB_SETUP.md](./docs/GITHUB_SETUP.md) | Actions, создание PAT, `NODE_AUTH_TOKEN` / `GITHUB_TOKEN`, первая публикация, visibility |
-| [docs/CONSUMER_SETUP.md](./docs/CONSUMER_SETUP.md) | Локальный install, secrets в CI, Next.js, troubleshooting |
+| [docs/CONSUMER_SETUP.md](./docs/CONSUMER_SETUP.md) | Локальный install, secrets в CI, **Vercel**, Next.js, troubleshooting |
 
 ## Публикация
 
