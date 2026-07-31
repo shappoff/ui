@@ -26,15 +26,52 @@ Next.js: добавьте `transpilePackages: ["@shappoff/ui"]` в конфиг.
 
 **Vercel:** в проекте `.npmrc` с `${NODE_AUTH_TOKEN}` + Environment Variable `NODE_AUTH_TOKEN` (PAT) — см. [CONSUMER_SETUP.md → Часть C](./docs/CONSUMER_SETUP.md#часть-c-vercel-проект-потребитель).
 
-## Примерные компоненты
+## Компоненты
 
-| Компонент | Назначение |
-|-----------|------------|
+| Компонент / entry | Назначение |
+|-------------------|------------|
 | `Button` | Кнопка: `variant`, `size`, `forwardRef` |
 | `Input` | Поле ввода: `label`, `error`, `forwardRef` |
 | `Badge` | Метка: `tone` (`neutral` \| `success` \| `warning`) |
+| `@shappoff/ui/map` → `LeafletMap` | Оболочка карты (basemap switcher, `children` overlays) |
+| `@shappoff/ui/map` → `MapMarkerLayer` | Слой маркеров (`markers`, `variant`) |
+| `@shappoff/ui/map` → `MapSkeleton` | Placeholder при lazy-load |
 
-Набор будет расширяться; публичный API — через `src/index.ts`.
+Главный entry (`@shappoff/ui`) **не** реэкспортирует карту — Leaflet остаётся optional peer.
+
+### Карта (`@shappoff/ui/map`)
+
+Peers (optional для UI без карты; обязательны для map entry):
+
+```bash
+npm install leaflet react-leaflet
+npm install -D @types/leaflet
+```
+
+```tsx
+import {
+  LeafletMap,
+  MapMarkerLayer,
+  MapSkeleton,
+  type MapMarker,
+} from "@shappoff/ui/map";
+import "@shappoff/ui/styles.css";
+import "leaflet/dist/leaflet.css";
+
+const markers: MapMarker[] = [
+  { id: "1", lat: 53.9, lng: 27.56, title: "Минск" },
+];
+
+export function ExampleMap() {
+  return (
+    <LeafletMap ariaLabel="Карта">
+      <MapMarkerLayer markers={markers} variant="primary" />
+    </LeafletMap>
+  );
+}
+```
+
+**Next.js (SSG / App Router):** грузите карту через `next/dynamic` с `ssr: false` (Leaflet требует `window`). Пример — в [CONSUMER_SETUP.md](./docs/CONSUMER_SETUP.md#карта-shappoffuimap).
 
 ## Структура проекта
 
@@ -47,12 +84,15 @@ npm/
 │   ├── GITHUB_SETUP.md        # GitHub, PAT, NODE_AUTH_TOKEN, публикация
 │   └── CONSUMER_SETUP.md      # установка локально, в CI и на Vercel
 ├── src/
-│   ├── index.ts               # публичный API
+│   ├── index.ts               # публичный API (Button, Input, Badge)
+│   ├── map.ts                 # публичный API карты (@shappoff/ui/map)
 │   ├── styles.css             # CSS-переменные и стили компонентов
+│   ├── maps/                  # типы, tile layers, BELARUS_VIEW
 │   └── components/
 │       ├── Button/
 │       ├── Input/
-│       └── Badge/
+│       ├── Badge/
+│       └── Map/
 ├── .npmrc                     # mapping @shappoff → GitHub Packages (без токена)
 ├── package.json
 ├── tsconfig.json
@@ -73,19 +113,19 @@ npm run dev          # watch
 npm pack --dry-run   # проверить состав пакета
 ```
 
-Стек: TypeScript, tsup (ESM + CJS + `.d.ts`), React как `peerDependencies`, префиксированные CSS-классы (`sui-*`) и CSS-переменные темы.
+Стек: TypeScript, tsup (ESM + CJS + `.d.ts`), React / Leaflet как `peerDependencies`, префиксированные CSS-классы (`sui-*`) и CSS-переменные темы.
 
 ## Документация
 
 | Документ | Содержание |
 |----------|------------|
 | [docs/GITHUB_SETUP.md](./docs/GITHUB_SETUP.md) | Actions, создание PAT, `NODE_AUTH_TOKEN` / `GITHUB_TOKEN`, первая публикация, visibility |
-| [docs/CONSUMER_SETUP.md](./docs/CONSUMER_SETUP.md) | Локальный install, secrets в CI, **Vercel**, Next.js, troubleshooting |
+| [docs/CONSUMER_SETUP.md](./docs/CONSUMER_SETUP.md) | Локальный install, secrets в CI, **Vercel**, Next.js, карта, troubleshooting |
 
 ## Публикация
 
 1. Поднять `version` в `package.json`.
-2. Создать GitHub Release или запушить тег `v*` (например `v0.1.0`).
+2. Создать GitHub Release или запушить тег `v*` (например `v0.2.0`).
 3. Workflow **Publish** выполнит `npm publish` с  
    `NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}`.
 

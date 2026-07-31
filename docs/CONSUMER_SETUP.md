@@ -144,6 +144,60 @@ export default nextConfig;
 - `react` и `react-dom` ≥ 18 (peer dependencies пакета)
 - импорт `@shappoff/ui/styles.css` один раз (например в `app/layout.tsx` или корневом CSS)
 
+### A5.1. Карта (`@shappoff/ui/map`)
+
+Карта вынесена в отдельный entry, чтобы приложения без Leaflet не тянули тяжёлые peers.
+
+1. Установите optional peers:
+
+```bash
+npm install leaflet react-leaflet
+npm install -D @types/leaflet
+```
+
+2. Импортируйте стили Leaflet **в клиентском** entry карты (не обязательно в root layout):
+
+```tsx
+import "leaflet/dist/leaflet.css";
+```
+
+3. В Next.js App Router (в т.ч. `output: "export"`) грузите карту без SSR:
+
+```tsx
+"use client";
+
+import dynamic from "next/dynamic";
+import { MapSkeleton } from "@shappoff/ui/map";
+
+const MapCanvas = dynamic(() => import("./MapCanvas").then((m) => m.MapCanvas), {
+  ssr: false,
+  loading: () => <MapSkeleton />,
+});
+```
+
+```tsx
+// MapCanvas.tsx
+"use client";
+
+import { LeafletMap, MapMarkerLayer } from "@shappoff/ui/map";
+import type { MapMarker } from "@shappoff/ui/map";
+import "leaflet/dist/leaflet.css";
+
+const markers: MapMarker[] = [
+  { id: "1", lat: 53.9, lng: 27.56, title: "Example" },
+];
+
+export function MapCanvas({ ariaLabel }: { ariaLabel: string }) {
+  return (
+    <LeafletMap ariaLabel={ariaLabel}>
+      <MapMarkerLayer markers={markers} variant="primary" />
+    </LeafletMap>
+  );
+}
+```
+
+Overlays — только через `children` (`MapMarkerLayer` или свой слой). Датасеты маркеров остаются в приложении.
+
 ### A6. Разработка библиотеки без публикации (опционально)
 
 Пока правите `@shappoff/ui` локально:
@@ -381,6 +435,9 @@ import "@shappoff/ui/styles.css";
 | `404` / `Not found` | Неверный scope/имя; пакет private и нет доступа; опечатка `@shappoff/ui` |
 | Стили «не те» | Импортируйте `@shappoff/ui/styles.css`; проверьте CSS-переменные |
 | Next.js ошибки по пакету | Добавьте `transpilePackages: ['@shappoff/ui']` |
+| Карта: `window is not defined` | `next/dynamic` с `ssr: false`; не импортируйте `@shappoff/ui/map` в Server Component без dynamic |
+| Карта: нет тайлов / сломан layout | Импортируйте `leaflet/dist/leaflet.css` в client chunk карты |
+| Карта: peer warnings / missing module | `npm install leaflet react-leaflet` (+ `@types/leaflet`) |
 | CI ок локально, падает в Actions | Secret не добавлен / неверное имя; нет `registry-url` у `setup-node` |
 | Vercel: `401` на install | Нет env `NODE_AUTH_TOKEN` / не для Preview; в `.npmrc` нет `${NODE_AUTH_TOKEN}`; PAT без доступа |
 | Vercel: локально ок, деплой падает | Env добавлен после деплоя — нужен Redeploy; Root Directory без `.npmrc` |

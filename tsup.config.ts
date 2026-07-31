@@ -6,14 +6,17 @@ import { defineConfig } from 'tsup';
 const rootDir = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
-  entry: ['src/index.ts'],
+  entry: {
+    index: 'src/index.ts',
+    map: 'src/map.ts',
+  },
   format: ['esm', 'cjs'],
   dts: true,
   sourcemap: true,
   clean: true,
   splitting: false,
   treeshake: false,
-  external: ['react', 'react-dom'],
+  external: ['react', 'react-dom', 'leaflet', 'react-leaflet'],
   banner: {
     js: '"use client";',
   },
