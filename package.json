@@ -11,7 +11,7 @@
   "bugs": {
     "url": "https://github.com/shappoff/npm/issues"
   },
-  "homepage": "https://github.com/shappoff/npm#readme",
+  "homepage": "https://shappoff.github.io/npm/",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -39,7 +39,10 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "npm run typecheck && npm run build"
+    "prepublishOnly": "npm run typecheck && npm run build",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "test-storybook": "vitest run --project storybook"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
@@ -67,6 +70,17 @@
     "react-dom": "^19.1.0",
     "react-leaflet": "^5.0.0",
     "tsup": "^8.5.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "storybook": "^10.5.5",
+    "@storybook/react-vite": "^10.5.5",
+    "@chromatic-com/storybook": "^5.2.1",
+    "@storybook/addon-vitest": "^10.5.5",
+    "@storybook/addon-a11y": "^10.5.5",
+    "@storybook/addon-docs": "^10.5.5",
+    "@storybook/addon-mcp": "^0.7.0",
+    "vitest": "^4.1.10",
+    "playwright": "^1.62.1",
+    "@vitest/browser-playwright": "^4.1.10",
+    "@vitest/coverage-v8": "^4.1.10"
   }
 }

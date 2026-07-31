@@ -3,7 +3,12 @@ node_modules/
 
 # Build
 dist/
+storybook-static/
 *.tsbuildinfo
+
+# Storybook
+debug-storybook.log
+*storybook.log
 
 # Logs
 npm-debug.log*
@@ -29,3 +34,6 @@ coverage/
 
 # Pack artifacts
 *.tgz
+
+*storybook.log
+storybook-static

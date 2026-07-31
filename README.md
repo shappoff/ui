@@ -77,9 +77,12 @@ export function ExampleMap() {
 
 ```text
 npm/
+├── .cursor/rules/             # Storybook / component conventions for AI
 ├── .github/workflows/
 │   ├── ci.yml                 # typecheck + build
+│   ├── deploy-storybook.yml   # GitHub Pages (Storybook)
 │   └── publish.yml            # publish в GitHub Packages (release / tag v*)
+├── .storybook/                # Storybook 10 (react-vite)
 ├── docs/
 │   ├── GITHUB_SETUP.md        # GitHub, PAT, NODE_AUTH_TOKEN, публикация
 │   └── CONSUMER_SETUP.md      # установка локально, в CI и на Vercel
@@ -88,20 +91,33 @@ npm/
 │   ├── map.ts                 # публичный API карты (@shappoff/ui/map)
 │   ├── styles.css             # CSS-переменные и стили компонентов
 │   ├── maps/                  # типы, tile layers, BELARUS_VIEW
-│   └── components/
-│       ├── Button/
-│       ├── Input/
-│       ├── Badge/
-│       └── Map/
+│   └── components/            # + colocated *.stories.tsx
 ├── .npmrc                     # mapping @shappoff → GitHub Packages (без токена)
 ├── package.json
 ├── tsconfig.json
 ├── tsup.config.ts
+├── vitest.config.ts           # Storybook Vitest addon
 ├── LICENSE
 └── README.md
 ```
 
 После `npm run build` в `dist/` попадают ESM, CJS, типы и `styles.css`. В npm-пакет входит только `dist/` (`files` в `package.json`).
+
+## Storybook
+
+Живой каталог компонентов (CSF3, autodocs, a11y):
+
+```bash
+npm run storybook          # http://localhost:6006
+npm run build-storybook    # static → storybook-static/
+```
+
+Публичный деплой: **GitHub Pages** → [https://shappoff.github.io/npm/](https://shappoff.github.io/npm/)  
+Workflow: `.github/workflows/deploy-storybook.yml` (push в `main` / `workflow_dispatch`).
+
+В настройках репозитория: **Settings → Pages → Source: GitHub Actions**.
+
+Stories лежат рядом с компонентами (`*.stories.tsx`). Правила для AI: `.cursor/rules/storybook-*.mdc`.
 
 ## Разработка библиотеки
 
@@ -110,10 +126,11 @@ npm install
 npm run typecheck
 npm run build
 npm run dev          # watch
+npm run storybook    # UI catalog
 npm pack --dry-run   # проверить состав пакета
 ```
 
-Стек: TypeScript, tsup (ESM + CJS + `.d.ts`), React / Leaflet как `peerDependencies`, префиксированные CSS-классы (`sui-*`) и CSS-переменные темы.
+Стек: TypeScript, tsup (ESM + CJS + `.d.ts`), Storybook 10 (`@storybook/react-vite`), React / Leaflet как `peerDependencies`, префиксированные CSS-классы (`sui-*`) и CSS-переменные темы.
 
 ## Документация
 
