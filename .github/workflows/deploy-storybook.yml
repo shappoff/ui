@@ -36,7 +36,7 @@ jobs:
           STORYBOOK_BASE_PATH: /npm/
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: storybook-static
 
@@ -49,4 +49,4 @@ jobs:
     steps:
       - id: deploy
         name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
