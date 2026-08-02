@@ -96,7 +96,7 @@ export function LeafletMap({
         maxBoundsViscosity={0.75}
         preferCanvas
         zoomControl
-        attributionControl
+        attributionControl={false}
         scrollWheelZoom
         fadeAnimation={false}
         zoomAnimation

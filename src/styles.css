@@ -251,19 +251,6 @@
   z-index: 0;
 }
 
-.sui-map__canvas .leaflet-control-attribution {
-  max-width: min(100%, 18rem);
-  padding: 0.2rem 0.45rem;
-  background: color-mix(in srgb, var(--sui-color-bg) 88%, transparent);
-  color: var(--sui-color-muted);
-  font-size: 0.65rem;
-  line-height: 1.35;
-}
-
-.sui-map__canvas .leaflet-control-attribution a {
-  color: var(--sui-color-primary);
-}
-
 .sui-map__canvas .leaflet-control-zoom a {
   width: 2.25rem;
   height: 2.25rem;
