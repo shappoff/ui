@@ -11,7 +11,12 @@ export default defineConfig({
     map: 'src/map.ts',
   },
   format: ['esm', 'cjs'],
-  dts: true,
+  // tsup injects deprecated `baseUrl` during DTS; silence until upstream fix (egoist/tsup#1388)
+  dts: {
+    compilerOptions: {
+      ignoreDeprecations: "6.0",
+    },
+  },
   sourcemap: true,
   clean: true,
   splitting: false,
