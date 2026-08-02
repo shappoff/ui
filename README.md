@@ -18,7 +18,7 @@ npm install @shappoff/ui
 ```
 
 ```tsx
-import { Button, Input, Badge } from "@shappoff/ui";
+import { Button, Input, Badge, Drawer } from "@shappoff/ui";
 import "@shappoff/ui/styles.css";
 ```
 
@@ -33,9 +33,51 @@ Next.js: добавьте `transpilePackages: ["@shappoff/ui"]` в конфиг.
 | `Button` | Кнопка: `variant`, `size`, `forwardRef` |
 | `Input` | Поле ввода: `label`, `error`, `forwardRef` |
 | `Badge` | Метка: `tone` (`neutral` \| `success` \| `warning`) |
+| `Drawer` | Панель с края экрана (Base UI): trigger / content / snap points |
 | `@shappoff/ui/map` → `LeafletMap` | Оболочка карты (basemap switcher, `children` overlays) |
 | `@shappoff/ui/map` → `MapMarkerLayer` | Слой маркеров (`markers`, `variant`) |
 | `@shappoff/ui/map` → `MapSkeleton` | Placeholder при lazy-load |
+
+Для `Drawer` установите peer `@base-ui/react`:
+
+```bash
+npm install @base-ui/react
+```
+
+```tsx
+import {
+  Button,
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@shappoff/ui";
+
+export function ExampleDrawer() {
+  return (
+    <Drawer showSwipeHandle>
+      <DrawerTrigger render={<Button variant="secondary" />}>
+        Open
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>Title</DrawerTitle>
+          <DrawerDescription>Supporting text</DrawerDescription>
+        </DrawerHeader>
+        <DrawerFooter>
+          <DrawerClose render={<Button variant="secondary" />}>
+            Close
+          </DrawerClose>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
+  );
+}
+```
 
 Главный entry (`@shappoff/ui`) **не** реэкспортирует карту — Leaflet остаётся optional peer.
 

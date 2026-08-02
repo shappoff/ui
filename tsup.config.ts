@@ -21,7 +21,14 @@ export default defineConfig({
   clean: true,
   splitting: false,
   treeshake: false,
-  external: ['react', 'react-dom', 'leaflet', 'react-leaflet'],
+  external: [
+    'react',
+    'react-dom',
+    'leaflet',
+    'react-leaflet',
+    '@base-ui/react',
+    '@base-ui/react/drawer',
+  ],
   banner: {
     js: '"use client";',
   },

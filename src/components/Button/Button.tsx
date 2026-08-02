@@ -12,7 +12,7 @@ export type ButtonSize = "sm" | "md" | "lg";
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
   size?: ButtonSize;
-  children: ReactNode;
+  children?: ReactNode;
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
