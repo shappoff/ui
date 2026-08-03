@@ -2,7 +2,6 @@ import { useState, type ComponentProps } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
-import { Button } from "../Button";
 import {
   Drawer,
   DrawerBody,
@@ -51,7 +50,7 @@ type Story = StoryObj<typeof meta>;
 function DefaultDrawer(args: ComponentProps<typeof Drawer>) {
   return (
     <Drawer {...args} showSwipeHandle={args.showSwipeHandle ?? true}>
-      <DrawerTrigger render={<Button variant="secondary" />}>
+      <DrawerTrigger render={<button type="button" />}>
         Open Drawer
       </DrawerTrigger>
       <DrawerContent>
@@ -66,10 +65,8 @@ function DefaultDrawer(args: ComponentProps<typeof Drawer>) {
           regions inside a content-sized panel.
         </DrawerBody>
         <DrawerFooter>
-          <Button>Continue</Button>
-          <DrawerClose render={<Button variant="secondary" />}>
-            Cancel
-          </DrawerClose>
+          <button type="button">Continue</button>
+          <DrawerClose render={<button type="button" />}>Cancel</DrawerClose>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
@@ -120,7 +117,7 @@ export const SnapPoints: Story = {
         snapPoint={snapPoint}
         onSnapPointChange={setSnapPoint}
       >
-        <DrawerTrigger render={<Button variant="secondary" />}>
+        <DrawerTrigger render={<button type="button" />}>
           Open Snap Drawer
         </DrawerTrigger>
         <DrawerContent>
@@ -139,9 +136,7 @@ export const SnapPoints: Story = {
             ))}
           </DrawerBody>
           <DrawerFooter>
-            <DrawerClose render={<Button variant="secondary" />}>
-              Close
-            </DrawerClose>
+            <DrawerClose render={<button type="button" />}>Close</DrawerClose>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
@@ -152,7 +147,7 @@ export const SnapPoints: Story = {
 export const Nested: Story = {
   render: (args) => (
     <Drawer {...args} showSwipeHandle>
-      <DrawerTrigger render={<Button variant="secondary" />}>
+      <DrawerTrigger render={<button type="button" />}>
         Open Nested Drawer
       </DrawerTrigger>
       <DrawerContent>
@@ -164,7 +159,9 @@ export const Nested: Story = {
         </DrawerHeader>
         <DrawerBody>
           <Drawer showSwipeHandle>
-            <DrawerTrigger render={<Button />}>Open nested</DrawerTrigger>
+            <DrawerTrigger render={<button type="button" />}>
+              Open nested
+            </DrawerTrigger>
             <DrawerContent>
               <DrawerHeader>
                 <DrawerTitle>Nested drawer</DrawerTitle>
@@ -173,7 +170,7 @@ export const Nested: Story = {
                 </DrawerDescription>
               </DrawerHeader>
               <DrawerFooter>
-                <DrawerClose render={<Button variant="secondary" />}>
+                <DrawerClose render={<button type="button" />}>
                   Close
                 </DrawerClose>
               </DrawerFooter>
@@ -181,7 +178,7 @@ export const Nested: Story = {
           </Drawer>
         </DrawerBody>
         <DrawerFooter>
-          <DrawerClose render={<Button variant="secondary" />}>
+          <DrawerClose render={<button type="button" />}>
             Close parent
           </DrawerClose>
         </DrawerFooter>
@@ -196,9 +193,9 @@ export const Controlled: Story = {
 
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-        <Button variant="secondary" onClick={() => setOpen(true)}>
+        <button type="button" onClick={() => setOpen(true)}>
           Open controlled
-        </Button>
+        </button>
         <Drawer
           {...args}
           open={open}
@@ -213,7 +210,9 @@ export const Controlled: Story = {
               </DrawerDescription>
             </DrawerHeader>
             <DrawerFooter>
-              <Button onClick={() => setOpen(false)}>Done</Button>
+              <button type="button" onClick={() => setOpen(false)}>
+                Done
+              </button>
             </DrawerFooter>
           </DrawerContent>
         </Drawer>

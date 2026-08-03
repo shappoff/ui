@@ -114,16 +114,25 @@ npm install @shappoff/ui
 ### A5. Использование в React / Next.js
 
 ```tsx
-import { Button, Input, Badge } from "@shappoff/ui";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@shappoff/ui";
 import "@shappoff/ui/styles.css";
 
 export function Example() {
   return (
-    <div>
-      <Badge tone="success">Ready</Badge>
-      <Input label="Email" name="email" />
-      <Button variant="primary">Save</Button>
-    </div>
+    <Drawer showSwipeHandle>
+      <DrawerTrigger render={<button type="button" />}>Open</DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>Title</DrawerTitle>
+        </DrawerHeader>
+      </DrawerContent>
+    </Drawer>
   );
 }
 ```
@@ -389,7 +398,7 @@ Vercel по умолчанию запускает `npm install` / `npm ci` в к
 То же, что локально:
 
 ```tsx
-import { Button, Input, Badge } from "@shappoff/ui";
+import { Drawer } from "@shappoff/ui";
 import "@shappoff/ui/styles.css";
 ```
 

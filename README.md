@@ -18,7 +18,7 @@ npm install @shappoff/ui
 ```
 
 ```tsx
-import { Button, Input, Badge, Drawer } from "@shappoff/ui";
+import { Drawer } from "@shappoff/ui";
 import "@shappoff/ui/styles.css";
 ```
 
@@ -30,9 +30,6 @@ Next.js: добавьте `transpilePackages: ["@shappoff/ui"]` в конфиг.
 
 | Компонент / entry | Назначение |
 |-------------------|------------|
-| `Button` | Кнопка: `variant`, `size`, `forwardRef` |
-| `Input` | Поле ввода: `label`, `error`, `forwardRef` |
-| `Badge` | Метка: `tone` (`neutral` \| `success` \| `warning`) |
 | `Drawer` | Панель с края экрана (Base UI): trigger / content / snap points |
 | `@shappoff/ui/map` → `LeafletMap` | Оболочка карты (basemap switcher, `children` overlays) |
 | `@shappoff/ui/map` → `MapMarkerLayer` | Слой маркеров (`markers`, `variant`) |
@@ -46,7 +43,6 @@ npm install @base-ui/react
 
 ```tsx
 import {
-  Button,
   Drawer,
   DrawerClose,
   DrawerContent,
@@ -60,7 +56,7 @@ import {
 export function ExampleDrawer() {
   return (
     <Drawer showSwipeHandle>
-      <DrawerTrigger render={<Button variant="secondary" />}>
+      <DrawerTrigger render={<button type="button" />}>
         Open
       </DrawerTrigger>
       <DrawerContent>
@@ -69,7 +65,7 @@ export function ExampleDrawer() {
           <DrawerDescription>Supporting text</DrawerDescription>
         </DrawerHeader>
         <DrawerFooter>
-          <DrawerClose render={<Button variant="secondary" />}>
+          <DrawerClose render={<button type="button" />}>
             Close
           </DrawerClose>
         </DrawerFooter>
@@ -129,7 +125,7 @@ npm/
 │   ├── GITHUB_SETUP.md        # GitHub, PAT, NODE_AUTH_TOKEN, публикация
 │   └── CONSUMER_SETUP.md      # установка локально, в CI и на Vercel
 ├── src/
-│   ├── index.ts               # публичный API (Button, Input, Badge)
+│   ├── index.ts               # публичный API (Drawer)
 │   ├── map.ts                 # публичный API карты (@shappoff/ui/map)
 │   ├── styles.css             # CSS-переменные и стили компонентов
 │   ├── maps/                  # типы, tile layers, BELARUS_VIEW

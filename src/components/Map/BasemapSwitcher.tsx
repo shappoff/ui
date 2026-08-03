@@ -7,7 +7,6 @@ import {
   TILE_LAYERS,
   type TileLayerId,
 } from "../../maps";
-import { Button } from "../Button";
 import {
   Drawer,
   DrawerBody,
@@ -48,11 +47,15 @@ export function BasemapSwitcher({ value, onChange }: BasemapSwitcherProps) {
             {TILE_LAYER_ORDER.map((id) => {
               const selected = id === value;
               return (
-                <Button
+                <button
                   key={id}
                   type="button"
-                  variant={selected ? "primary" : "ghost"}
-                  className="sui-map__switcher-option"
+                  className={[
+                    "sui-map__switcher-option",
+                    selected && "sui-map__switcher-option--selected",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
                   aria-pressed={selected}
                   onClick={() => {
                     onChange(id);
@@ -60,7 +63,7 @@ export function BasemapSwitcher({ value, onChange }: BasemapSwitcherProps) {
                   }}
                 >
                   {TILE_LAYERS[id].label}
-                </Button>
+                </button>
               );
             })}
           </DrawerBody>
