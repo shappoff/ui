@@ -1,6 +1,6 @@
 {
   "name": "@shappoff/ui",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Reusable React / Next.js UI components for internal projects",
   "license": "MIT",
   "author": "shappoff",
