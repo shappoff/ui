@@ -154,7 +154,7 @@ npm run storybook          # http://localhost:6006
 npm run build-storybook    # static → storybook-static/
 ```
 
-Публичный деплой: **GitHub Pages** → [https://shappoff.github.io/npm/](https://shappoff.github.io/npm/)  
+Публичный деплой: **GitHub Pages** → [https://shappoff.github.io/ui/](https://shappoff.github.io/ui/)  
 Workflow: `.github/workflows/deploy-storybook.yml` (push в `main` / `workflow_dispatch`).
 
 В настройках репозитория: **Settings → Pages → Source: GitHub Actions**.

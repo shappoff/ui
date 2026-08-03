@@ -33,7 +33,7 @@ jobs:
       - name: Build Storybook
         run: npm run build-storybook
         env:
-          STORYBOOK_BASE_PATH: /npm/
+          STORYBOOK_BASE_PATH: /ui/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5

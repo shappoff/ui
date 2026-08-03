@@ -3,14 +3,14 @@
 Пошаговая инструкция: репозиторий, токены, env-переменные, публикация в GitHub Packages и права доступа.
 
 Пакет: **`@shappoff/ui`**  
-Репозиторий: **`https://github.com/shappoff/npm`**  
+Репозиторий: **`https://github.com/shappoff/ui`**  
 Registry: **`https://npm.pkg.github.com`**
 
 ---
 
 ## 1. Репозиторий и Actions
 
-1. Откройте [github.com/shappoff/npm](https://github.com/shappoff/npm).
+1. Откройте [github.com/shappoff/ui](https://github.com/shappoff/ui).
 2. Убедитесь, что у вас есть права на запись (owner / write).
 3. Перейдите в **Settings → Actions → General**.
 4. В блоке **Actions permissions** выберите разрешение запускать workflows (обычно *Allow all actions and reusable workflows*).

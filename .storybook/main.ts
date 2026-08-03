@@ -1,10 +1,10 @@
 import type { StorybookConfig } from "@storybook/react-vite";
 
 /**
- * Repo name on GitHub Pages project site: https://shappoff.github.io/npm/
+ * Repo name on GitHub Pages project site: https://shappoff.github.io/ui/
  * Override with STORYBOOK_BASE_PATH for other hosts.
  */
-const productionBase = process.env.STORYBOOK_BASE_PATH ?? "/npm/";
+const productionBase = process.env.STORYBOOK_BASE_PATH ?? "/ui/";
 
 const config: StorybookConfig = {
   stories: ["../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
