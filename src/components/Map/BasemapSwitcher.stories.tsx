@@ -25,7 +25,7 @@ const meta = {
         style={{
           position: "relative",
           width: "min(100%, 24rem)",
-          height: "4rem",
+          height: "8rem",
           background:
             "color-mix(in srgb, var(--sui-color-border) 35%, var(--sui-color-bg))",
         }}
@@ -34,6 +34,15 @@ const meta = {
       </div>
     ),
   ],
+  parameters: {
+    layout: "fullscreen",
+    docs: {
+      description: {
+        component:
+          "Basemap picker for LeafletMap. Opens a Drawer with the layer list instead of a native select.",
+      },
+    },
+  },
 } satisfies Meta<typeof BasemapSwitcher>;
 
 export default meta;
