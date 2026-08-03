@@ -38,7 +38,6 @@ export function BasemapSwitcher({ value, onChange }: BasemapSwitcherProps) {
           className="sui-map__switcher-trigger"
           aria-label="Слой карты"
         >
-          <span className="sui-map__switcher-label">Карта</span>
           <span className="sui-map__switcher-value">{activeLabel}</span>
         </DrawerTrigger>
         <DrawerContent>
