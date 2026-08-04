@@ -21,6 +21,15 @@
   --drawer-inset: 0px;
   --drawer-bleed-background: var(--sui-color-bg);
   --drawer-overlay-min-opacity: 0;
+  /* Base UI Drawer runtime vars (set on popup/overlay; defaults for idle state) */
+  --drawer-swipe-progress: 0;
+  --drawer-swipe-strength: 1;
+  --drawer-height: auto;
+  --drawer-frontmost-height: var(--drawer-height);
+  --drawer-snap-point-offset: 0px;
+  --drawer-swipe-movement-x: 0px;
+  --drawer-swipe-movement-y: 0px;
+  --nested-drawers: 0;
 }
 
 /*
@@ -655,8 +664,7 @@ body {
   opacity: 0;
 }
 
-.sui-drawer-popup[data-nested-drawer-open][data-nested-drawer-swiping]
-  > .sui-drawer-content {
+.sui-drawer-popup[data-nested-drawer-open][data-nested-drawer-swiping] > .sui-drawer-content {
   opacity: 1;
 }
 
@@ -692,8 +700,7 @@ body {
   opacity: 0;
 }
 
-.sui-drawer-popup[data-nested-drawer-open][data-nested-drawer-swiping]
-  > .sui-drawer-swipe-handle {
+.sui-drawer-popup[data-nested-drawer-open][data-nested-drawer-swiping] > .sui-drawer-swipe-handle {
   opacity: 1;
 }
 
