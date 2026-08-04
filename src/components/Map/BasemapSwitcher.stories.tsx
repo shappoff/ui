@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
-import type { TileLayerId } from "../../maps";
+import { TILE_LAYER_ORDER, type TileLayerId } from "../../maps";
 
 import { BasemapSwitcher } from "./BasemapSwitcher";
 
@@ -16,7 +16,7 @@ const meta = {
   argTypes: {
     value: {
       control: "select",
-      options: ["osm", "pgm", "verstka1", "verstka2", "rkka", "google"],
+      options: TILE_LAYER_ORDER,
     },
   },
   decorators: [

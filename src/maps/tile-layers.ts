@@ -3,6 +3,19 @@ import type { TileLayerConfig, TileLayerId } from "./types";
 const INDEXBY_ATTRIBUTION =
   'Historical tiles via <a href="https://github.com/indexby/storage">indexby</a>';
 
+const GOOGLE_SUBDOMAINS = ["mt0", "mt1", "mt2", "mt3"];
+
+function googleTile(lyrs: string, label: string): TileLayerConfig {
+  return {
+    label,
+    url: `https://{s}.google.com/vt/lyrs=${lyrs}&x={x}&y={y}&z={z}`,
+    attribution: "&copy; Google",
+    maxZoom: 20,
+    maxNativeZoom: 20,
+    subdomains: GOOGLE_SUBDOMAINS,
+  };
+}
+
 /**
  * Display order for the basemap switcher (stable; do not rely on Object.keys).
  */
@@ -12,7 +25,10 @@ export const TILE_LAYER_ORDER: TileLayerId[] = [
   "verstka1",
   "verstka2",
   "rkka",
-  "google",
+  "googleStreet",
+  "googleSat",
+  "googleHybrid",
+  "googleTerrain",
 ];
 
 /**
@@ -55,14 +71,10 @@ export const TILE_LAYERS: Record<TileLayerId, TileLayerConfig> = {
     maxZoom: 18,
     maxNativeZoom: 14,
   },
-  google: {
-    label: "Google",
-    url: "https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}",
-    attribution: "&copy; Google",
-    maxZoom: 20,
-    maxNativeZoom: 20,
-    subdomains: ["mt0", "mt1", "mt2", "mt3"],
-  },
+  googleStreet: googleTile("m", "Google Улица"),
+  googleSat: googleTile("s", "Google Спутник"),
+  googleHybrid: googleTile("s,h", "Google Гибрид"),
+  googleTerrain: googleTile("p", "Google Рельеф"),
 };
 
 export function getTileLayer(id: TileLayerId): TileLayerConfig {

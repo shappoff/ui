@@ -23,7 +23,10 @@ export type TileLayerId =
   | "verstka1"
   | "verstka2"
   | "rkka"
-  | "google";
+  | "googleStreet"
+  | "googleSat"
+  | "googleHybrid"
+  | "googleTerrain";
 
 /** Point shown on a map; datasets are owned by the consumer. */
 export type MapMarker = {

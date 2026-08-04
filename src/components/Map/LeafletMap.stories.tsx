@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 
-import type { MapMarker } from "../../maps";
+import { TILE_LAYER_ORDER, type MapMarker } from "../../maps";
 
 import { LeafletMap } from "./LeafletMap";
 import { MapMarkerLayer } from "./MapMarkerLayer";
@@ -43,7 +43,7 @@ const meta = {
   argTypes: {
     basemap: {
       control: "select",
-      options: ["osm", "pgm", "verstka1", "verstka2", "rkka", "google"],
+      options: TILE_LAYER_ORDER,
     },
   },
   decorators: [
