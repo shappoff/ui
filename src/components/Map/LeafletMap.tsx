@@ -95,7 +95,7 @@ export function LeafletMap({
         maxBounds={BELARUS_VIEW.maxBounds}
         maxBoundsViscosity={0.75}
         preferCanvas
-        zoomControl
+        zoomControl={false}
         attributionControl={false}
         scrollWheelZoom
         fadeAnimation={false}
