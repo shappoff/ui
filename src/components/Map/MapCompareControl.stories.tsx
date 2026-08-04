@@ -55,7 +55,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Chrome for historical basemap compare: mode toggle, overlay picker, opacity slider.",
+          "Chrome for historical basemap compare: mode toggle, overlay picker, opacity slider. On viewports under 40rem, collapsed behind «Сравнить карты».",
       },
     },
   },
