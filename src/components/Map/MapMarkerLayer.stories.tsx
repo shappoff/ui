@@ -1,25 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import type { MapMarker } from "../../maps";
-
 import { LeafletMap } from "./LeafletMap";
 import { MapMarkerLayer } from "./MapMarkerLayer";
+import { BELARUS_CITY_MARKERS } from "./map-story-fixtures";
 
-const markers: MapMarker[] = [
-  {
-    id: "1",
-    lat: 53.9,
-    lng: 27.56,
-    title: "Точка A",
-    description: "Описание маркера",
-  },
-  {
-    id: "2",
-    lat: 53.85,
-    lng: 27.45,
-    title: "Точка B",
-  },
-];
+const markers = BELARUS_CITY_MARKERS.slice(0, 2);
 
 const meta = {
   title: "Map/MapMarkerLayer",

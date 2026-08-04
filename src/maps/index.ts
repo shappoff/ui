@@ -10,6 +10,8 @@ export {
 export type {
   MapCompareConfig,
   MapCompareMode,
+  MapEdgeDirection,
+  MapHeatPoint,
   MapMarker,
   MapMarkerVariant,
   MapViewConfig,

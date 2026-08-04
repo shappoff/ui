@@ -41,6 +41,30 @@ export type MapMarker = {
 export type MapMarkerVariant = "primary" | "accent";
 
 /**
+ * Heatmap sample. Intensity defaults to 1 when omitted.
+ * Prefer this over MapMarker when you only need density, not popups.
+ */
+export type MapHeatPoint = {
+  lat: number;
+  lng: number;
+  intensity?: number;
+};
+
+/**
+ * Compass octant for off-screen point indicators (EdgeMarker / Signposts UX).
+ * Mid-edge and corner placements on the viewport.
+ */
+export type MapEdgeDirection =
+  | "n"
+  | "ne"
+  | "e"
+  | "se"
+  | "s"
+  | "sw"
+  | "w"
+  | "nw";
+
+/**
  * How a secondary basemap is compared with the primary one.
  * - `opacity` — semi-transparent overlay on top of the base
  * - `side-by-side` — vertical swipe divider between two layers

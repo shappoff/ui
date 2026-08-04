@@ -399,6 +399,70 @@ body {
   line-height: 1.35;
 }
 
+/* Minimap (leaflet-minimap) — token-aligned chrome */
+.sui-map__canvas .leaflet-control-minimap {
+  border: 2px solid color-mix(in srgb, var(--sui-color-bg) 88%, var(--sui-color-primary));
+  border-radius: var(--sui-radius-sm);
+  background: var(--sui-color-bg);
+  box-shadow: 0 1px 6px color-mix(in srgb, var(--sui-color-fg) 22%, transparent);
+  overflow: hidden;
+}
+
+.sui-map__canvas .leaflet-control-minimap .leaflet-container {
+  background: color-mix(in srgb, var(--sui-color-border) 35%, var(--sui-color-bg));
+}
+
+/* Edge / Signposts chips */
+.sui-map-edge__icon {
+  background: transparent;
+  border: 0;
+}
+
+.sui-map-edge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  min-width: 2.1rem;
+  min-height: 2.1rem;
+  padding: 0.2rem 0.35rem;
+  border: 1px solid color-mix(in srgb, var(--sui-color-fg) 14%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--sui-color-bg) 94%, transparent);
+  box-shadow: 0 1px 4px color-mix(in srgb, var(--sui-color-fg) 22%, transparent);
+  color: var(--sui-color-fg);
+  cursor: pointer;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sui-map-edge--primary .sui-map-edge__arrow {
+  border-bottom-color: var(--sui-color-primary);
+}
+
+.sui-map-edge--accent .sui-map-edge__arrow {
+  border-bottom-color: var(--sui-color-warning);
+}
+
+.sui-map-edge__arrow {
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 0.28rem solid transparent;
+  border-right: 0.28rem solid transparent;
+  border-bottom: 0.45rem solid var(--sui-color-primary);
+  transform-origin: 50% 60%;
+}
+
+.sui-map-edge__count {
+  min-width: 0.85rem;
+  color: var(--sui-color-fg);
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
 /* Drawer */
 .sui-drawer-viewport {
   position: fixed;

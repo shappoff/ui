@@ -26,6 +26,9 @@ const config: StorybookConfig = {
       // Project Pages need a non-root base; relative "./" also works but
       // absolute repo path keeps deep story URLs stable.
       base: configType === "PRODUCTION" ? productionBase : config.base,
+      optimizeDeps: {
+        include: ["leaflet", "leaflet.heat", "leaflet-minimap"],
+      },
     });
   },
 };

@@ -1,11 +1,17 @@
 export {
   LeafletMap,
   MapCompareControl,
+  MapEdgeMarkers,
+  MapHeatLayer,
   MapMarkerLayer,
+  MapMiniMap,
   MapSkeleton,
   type LeafletMapProps,
   type MapCompareControlProps,
+  type MapEdgeMarkersProps,
+  type MapHeatLayerProps,
   type MapMarkerLayerProps,
+  type MapMiniMapProps,
 } from "./components/Map";
 export {
   BELARUS_VIEW,
@@ -19,6 +25,8 @@ export {
 export type {
   MapCompareConfig,
   MapCompareMode,
+  MapEdgeDirection,
+  MapHeatPoint,
   MapMarker,
   MapMarkerVariant,
   MapViewConfig,

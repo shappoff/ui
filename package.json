@@ -50,6 +50,8 @@
   "peerDependencies": {
     "@base-ui/react": "^1.6.0",
     "leaflet": "^1.9.0",
+    "leaflet-minimap": "^3.6.1",
+    "leaflet.heat": "^0.2.0",
     "react": ">=18",
     "react-dom": ">=18",
     "react-leaflet": "^5.0.0"
@@ -59,6 +61,12 @@
       "optional": true
     },
     "leaflet": {
+      "optional": true
+    },
+    "leaflet-minimap": {
+      "optional": true
+    },
+    "leaflet.heat": {
       "optional": true
     },
     "react-leaflet": {
@@ -79,6 +87,8 @@
     "@vitest/browser-playwright": "^4.1.10",
     "@vitest/coverage-v8": "^4.1.10",
     "leaflet": "^1.9.4",
+    "leaflet-minimap": "^3.6.1",
+    "leaflet.heat": "^0.2.0",
     "playwright": "^1.62.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",

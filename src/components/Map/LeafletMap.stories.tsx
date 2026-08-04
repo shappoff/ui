@@ -6,35 +6,20 @@ import {
   HISTORICAL_TILE_LAYER_IDS,
   TILE_LAYER_ORDER,
   type MapCompareMode,
-  type MapMarker,
   type TileLayerId,
 } from "../../maps";
 
 import { LeafletMap } from "./LeafletMap";
+import { MapEdgeMarkers } from "./MapEdgeMarkers";
+import { MapHeatLayer } from "./MapHeatLayer";
 import { MapMarkerLayer } from "./MapMarkerLayer";
+import { MapMiniMap } from "./MapMiniMap";
+import {
+  BELARUS_CITY_MARKERS,
+  createBelarusHeatPoints,
+} from "./map-story-fixtures";
 
-const sampleMarkers: MapMarker[] = [
-  {
-    id: "minsk",
-    lat: 53.9,
-    lng: 27.56,
-    title: "Минск",
-    description: "Столица Беларуси",
-  },
-  {
-    id: "brest",
-    lat: 52.0976,
-    lng: 23.7341,
-    title: "Брест",
-  },
-  {
-    id: "gomel",
-    lat: 52.4412,
-    lng: 30.9878,
-    title: "Гомель",
-    description: "Областной центр",
-  },
-];
+const sampleMarkers = BELARUS_CITY_MARKERS.slice(0, 3);
 
 const meta = {
   title: "Map/LeafletMap",
@@ -175,6 +160,25 @@ export const CompareInteractive: Story = {
     docs: {
       description: {
         story: `Fully interactive compare over satellite imagery. Historical options: ${HISTORICAL_TILE_LAYER_IDS.join(", ")}.`,
+      },
+    },
+  },
+};
+
+export const HeatMiniMapAndEdges: Story = {
+  render: (args) => (
+    <LeafletMap {...args} center={[53.9, 27.56]} zoom={10}>
+      <MapHeatLayer points={createBelarusHeatPoints()} radius={26} blur={16} />
+      <MapMarkerLayer markers={BELARUS_CITY_MARKERS} />
+      <MapEdgeMarkers markers={BELARUS_CITY_MARKERS} />
+      <MapMiniMap />
+    </LeafletMap>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Composition demo: heatmap + markers + edge signposts + minimap. Zoom/pan to see off-screen chips and the inset.",
       },
     },
   },

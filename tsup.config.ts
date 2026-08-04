@@ -21,6 +21,8 @@ export default defineConfig({
     'react',
     'react-dom',
     'leaflet',
+    'leaflet.heat',
+    'leaflet-minimap',
     'react-leaflet',
     '@base-ui/react',
     '@base-ui/react/drawer',
