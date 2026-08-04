@@ -11,12 +11,8 @@ export default defineConfig({
     map: 'src/map.ts',
   },
   format: ['esm', 'cjs'],
-  // tsup injects deprecated `baseUrl` during DTS; silence until upstream fix (egoist/tsup#1388)
-  dts: {
-    compilerOptions: {
-      ignoreDeprecations: "6.0",
-    },
-  },
+  // Declarations via `tsc -p tsconfig.build.json` — tsup/rollup-plugin-dts lacks TS 7 API support
+  dts: false,
   sourcemap: true,
   clean: true,
   splitting: false,
