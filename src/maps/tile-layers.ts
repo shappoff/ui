@@ -32,6 +32,20 @@ export const TILE_LAYER_ORDER: TileLayerId[] = [
 ];
 
 /**
+ * Historical indexby-style overlays — default choices for basemap compare.
+ */
+export const HISTORICAL_TILE_LAYER_IDS: TileLayerId[] = [
+  "pgm",
+  "verstka1",
+  "verstka2",
+  "rkka",
+];
+
+export function isHistoricalTileLayer(id: TileLayerId): boolean {
+  return HISTORICAL_TILE_LAYER_IDS.includes(id);
+}
+
+/**
  * Shared basemap presets. LeafletMap resolves the tile URL by id.
  */
 export const TILE_LAYERS: Record<TileLayerId, TileLayerConfig> = {

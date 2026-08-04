@@ -2,15 +2,23 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import type { LatLngExpression } from "leaflet";
-import { MapContainer, TileLayer, useMap } from "react-leaflet";
+import { MapContainer, useMap } from "react-leaflet";
 
 import {
   BELARUS_VIEW,
-  getTileLayer,
+  type MapCompareConfig,
+  type MapCompareMode,
   type TileLayerId,
 } from "../../maps";
 
 import { BasemapSwitcher } from "./BasemapSwitcher";
+import { BasemapTileLayer } from "./BasemapTileLayer";
+import { MapCompareControl } from "./MapCompareControl";
+import { MapCompareDivider } from "./MapCompareDivider";
+import { MapCompareLayers } from "./MapCompareLayers";
+
+const DEFAULT_COMPARE_OPACITY = 0.55;
+const DEFAULT_COMPARE_MODE: MapCompareMode = "opacity";
 
 export type LeafletMapProps = {
   ariaLabel: string;
@@ -18,6 +26,11 @@ export type LeafletMapProps = {
   children?: ReactNode;
   /** Initial basemap; switcher lets the user change it. */
   basemap?: TileLayerId;
+  /**
+   * Optional historical/secondary layer compare (opacity or side-by-side).
+   * When set, shows compare chrome and a second tile layer.
+   */
+  compare?: MapCompareConfig;
   className?: string;
   center?: LatLngExpression;
   zoom?: number;
@@ -61,6 +74,7 @@ export function LeafletMap({
   ariaLabel,
   children,
   basemap = "osm",
+  compare,
   className,
   center = BELARUS_VIEW.center,
   zoom = BELARUS_VIEW.zoom,
@@ -68,9 +82,41 @@ export function LeafletMap({
 }: LeafletMapProps) {
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
   const [activeBasemap, setActiveBasemap] = useState(basemap);
-  const tile = getTileLayer(activeBasemap);
+  const [compareOverlay, setCompareOverlay] = useState<TileLayerId>(
+    compare?.overlay ?? "pgm",
+  );
+  const [compareMode, setCompareMode] = useState<MapCompareMode>(
+    compare?.mode ?? DEFAULT_COMPARE_MODE,
+  );
+  const [compareOpacity, setCompareOpacity] = useState(
+    compare?.opacity ?? DEFAULT_COMPARE_OPACITY,
+  );
+  const [compareSplit, setCompareSplit] = useState(0.5);
+
+  useEffect(() => {
+    setActiveBasemap(basemap);
+  }, [basemap]);
+
+  useEffect(() => {
+    if (compare?.overlay !== undefined) {
+      setCompareOverlay(compare.overlay);
+    }
+  }, [compare?.overlay]);
+
+  useEffect(() => {
+    if (compare?.mode !== undefined) {
+      setCompareMode(compare.mode);
+    }
+  }, [compare?.mode]);
+
+  useEffect(() => {
+    if (compare?.opacity !== undefined) {
+      setCompareOpacity(compare.opacity);
+    }
+  }, [compare?.opacity]);
 
   const rootClass = ["sui-map", className].filter(Boolean).join(" ");
+  const compareEnabled = compare != null;
 
   return (
     <div
@@ -86,6 +132,28 @@ export function LeafletMap({
           onBasemapChange?.(id);
         }}
       />
+      {compareEnabled ? (
+        <MapCompareControl
+          overlay={compareOverlay}
+          mode={compareMode}
+          opacity={compareOpacity}
+          onOverlayChange={(id) => {
+            setCompareOverlay(id);
+            compare.onOverlayChange?.(id);
+          }}
+          onModeChange={(mode) => {
+            setCompareMode(mode);
+            compare.onModeChange?.(mode);
+          }}
+          onOpacityChange={(opacity) => {
+            setCompareOpacity(opacity);
+            compare.onOpacityChange?.(opacity);
+          }}
+        />
+      ) : null}
+      {compareEnabled && compareMode === "side-by-side" ? (
+        <MapCompareDivider value={compareSplit} onChange={setCompareSplit} />
+      ) : null}
       <MapContainer
         className="sui-map__canvas"
         center={center}
@@ -103,17 +171,17 @@ export function LeafletMap({
         markerZoomAnimation={false}
       >
         <MapResizeSync container={container} />
-        <TileLayer
-          key={activeBasemap}
-          url={tile.url}
-          attribution={tile.attribution}
-          maxZoom={tile.maxZoom}
-          maxNativeZoom={tile.maxNativeZoom}
-          {...(tile.subdomains ? { subdomains: tile.subdomains } : {})}
-          updateWhenZooming={false}
-          updateWhenIdle
-          keepBuffer={2}
-        />
+        {compareEnabled ? (
+          <MapCompareLayers
+            baseId={activeBasemap}
+            overlayId={compareOverlay}
+            mode={compareMode}
+            opacity={compareOpacity}
+            split={compareSplit}
+          />
+        ) : (
+          <BasemapTileLayer key={activeBasemap} layerId={activeBasemap} />
+        )}
         {children}
       </MapContainer>
     </div>
