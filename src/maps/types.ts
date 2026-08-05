@@ -67,7 +67,8 @@ export type MapEdgeDirection =
 /**
  * How a secondary basemap is compared with the primary one.
  * - `opacity` — semi-transparent overlay on top of the base
- * - `side-by-side` — vertical swipe divider between two layers
+ * - `side-by-side` — swipe divider between two layers
+ *   (vertical on desktop ≥40rem, horizontal on narrow viewports)
  */
 export type MapCompareMode = "opacity" | "side-by-side";
 

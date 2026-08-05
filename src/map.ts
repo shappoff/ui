@@ -15,6 +15,7 @@ export {
 } from "./components/Map";
 export {
   BELARUS_VIEW,
+  COMPARE_WIDE_MQ,
   HISTORICAL_TILE_LAYER_IDS,
   TILE_LAYERS,
   TILE_LAYER_ORDER,
@@ -25,6 +26,7 @@ export {
 export type {
   MapCompareConfig,
   MapCompareMode,
+  MapCompareSplitOrientation,
   MapEdgeDirection,
   MapHeatPoint,
   MapMarker,

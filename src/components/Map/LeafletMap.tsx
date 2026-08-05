@@ -16,6 +16,7 @@ import { BasemapTileLayer } from "./BasemapTileLayer";
 import { MapCompareControl } from "./MapCompareControl";
 import { MapCompareDivider } from "./MapCompareDivider";
 import { MapCompareLayers } from "./MapCompareLayers";
+import { useCompareWideViewport } from "./useCompareWideViewport";
 
 const DEFAULT_COMPARE_OPACITY = 0.55;
 const DEFAULT_COMPARE_MODE: MapCompareMode = "opacity";
@@ -92,6 +93,8 @@ export function LeafletMap({
     compare?.opacity ?? DEFAULT_COMPARE_OPACITY,
   );
   const [compareSplit, setCompareSplit] = useState(0.5);
+  const isWide = useCompareWideViewport();
+  const compareOrientation = isWide ? "vertical" : "horizontal";
 
   useEffect(() => {
     setActiveBasemap(basemap);
@@ -152,7 +155,11 @@ export function LeafletMap({
         />
       ) : null}
       {compareEnabled && compareMode === "side-by-side" ? (
-        <MapCompareDivider value={compareSplit} onChange={setCompareSplit} />
+        <MapCompareDivider
+          value={compareSplit}
+          onChange={setCompareSplit}
+          orientation={compareOrientation}
+        />
       ) : null}
       <MapContainer
         className="sui-map__canvas"
@@ -178,6 +185,7 @@ export function LeafletMap({
             mode={compareMode}
             opacity={compareOpacity}
             split={compareSplit}
+            orientation={compareOrientation}
           />
         ) : (
           <BasemapTileLayer key={activeBasemap} layerId={activeBasemap} />

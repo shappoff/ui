@@ -277,26 +277,48 @@ body {
 
 .sui-map__compare-divider {
   position: absolute;
+  z-index: 450;
+  touch-action: none;
+  user-select: none;
+}
+
+.sui-map__compare-divider[data-orientation="vertical"] {
   top: 0;
   bottom: 0;
-  z-index: 450;
   width: 1.5rem;
   margin-left: -0.75rem;
   cursor: ew-resize;
-  touch-action: none;
-  user-select: none;
+}
+
+.sui-map__compare-divider[data-orientation="horizontal"] {
+  left: 0;
+  right: 0;
+  height: 1.5rem;
+  margin-top: -0.75rem;
+  cursor: ns-resize;
 }
 
 .sui-map__compare-divider::before {
   content: "";
   position: absolute;
+  background: color-mix(in srgb, var(--sui-color-bg) 80%, var(--sui-color-primary));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--sui-color-fg) 18%, transparent);
+}
+
+.sui-map__compare-divider[data-orientation="vertical"]::before {
   top: 0;
   bottom: 0;
   left: 50%;
   width: 2px;
   transform: translateX(-50%);
-  background: color-mix(in srgb, var(--sui-color-bg) 80%, var(--sui-color-primary));
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--sui-color-fg) 18%, transparent);
+}
+
+.sui-map__compare-divider[data-orientation="horizontal"]::before {
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  transform: translateY(-50%);
 }
 
 .sui-map__compare-divider-thumb {

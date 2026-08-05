@@ -105,7 +105,7 @@ export const CompareSideBySide: Story = {
     docs: {
       description: {
         story:
-          "Swipe divider: left = active basemap, right = historical layer. Drag the handle to compare.",
+          "Swipe divider between basemap and historical layer. Desktop (≥40rem): vertical split (left/right). Mobile: horizontal split (top/bottom).",
       },
     },
   },

@@ -1,5 +1,9 @@
 export { BELARUS_VIEW } from "./belarus";
 export {
+  COMPARE_WIDE_MQ,
+  type MapCompareSplitOrientation,
+} from "./compare";
+export {
   getTileLayer,
   HISTORICAL_TILE_LAYER_IDS,
   isHistoricalTileLayer,

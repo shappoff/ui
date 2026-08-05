@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import type { TileLayer as LeafletTileLayer } from "leaflet";
 import { useMap } from "react-leaflet";
 
-import type { MapCompareMode, TileLayerId } from "../../maps";
+import type {
+  MapCompareMode,
+  MapCompareSplitOrientation,
+  TileLayerId,
+} from "../../maps";
 
 import { BasemapTileLayer } from "./BasemapTileLayer";
 
@@ -13,29 +17,38 @@ export type MapCompareLayersProps = {
   overlayId: TileLayerId;
   mode: MapCompareMode;
   opacity: number;
-  /** 0–1 horizontal split; used in side-by-side mode. */
+  /** 0–1 split position; used in side-by-side mode. */
   split: number;
+  orientation: MapCompareSplitOrientation;
 };
 
 function clipTileLayers(
   map: ReturnType<typeof useMap>,
-  left: LeafletTileLayer | null,
-  right: LeafletTileLayer | null,
+  primary: LeafletTileLayer | null,
+  secondary: LeafletTileLayer | null,
   split: number,
+  orientation: MapCompareSplitOrientation,
 ) {
-  const leftEl = left?.getContainer();
-  const rightEl = right?.getContainer();
-  if (!leftEl || !rightEl) {
+  const primaryEl = primary?.getContainer();
+  const secondaryEl = secondary?.getContainer();
+  if (!primaryEl || !secondaryEl) {
     return;
   }
 
   const size = map.getSize();
   const nw = map.containerPointToLayerPoint([0, 0]);
   const se = map.containerPointToLayerPoint(size);
-  const clipX = nw.x + size.x * split;
 
-  leftEl.style.clip = `rect(${nw.y}px, ${clipX}px, ${se.y}px, ${nw.x}px)`;
-  rightEl.style.clip = `rect(${nw.y}px, ${se.x}px, ${se.y}px, ${clipX}px)`;
+  if (orientation === "horizontal") {
+    const clipY = nw.y + size.y * split;
+    primaryEl.style.clip = `rect(${nw.y}px, ${se.x}px, ${clipY}px, ${nw.x}px)`;
+    secondaryEl.style.clip = `rect(${clipY}px, ${se.x}px, ${se.y}px, ${nw.x}px)`;
+    return;
+  }
+
+  const clipX = nw.x + size.x * split;
+  primaryEl.style.clip = `rect(${nw.y}px, ${clipX}px, ${se.y}px, ${nw.x}px)`;
+  secondaryEl.style.clip = `rect(${nw.y}px, ${se.x}px, ${se.y}px, ${clipX}px)`;
 }
 
 function clearClip(layer: LeafletTileLayer | null) {
@@ -55,21 +68,26 @@ export function MapCompareLayers({
   mode,
   opacity,
   split,
+  orientation,
 }: MapCompareLayersProps) {
   const map = useMap();
-  const [leftLayer, setLeftLayer] = useState<LeafletTileLayer | null>(null);
-  const [rightLayer, setRightLayer] = useState<LeafletTileLayer | null>(null);
+  const [primaryLayer, setPrimaryLayer] = useState<LeafletTileLayer | null>(
+    null,
+  );
+  const [secondaryLayer, setSecondaryLayer] = useState<LeafletTileLayer | null>(
+    null,
+  );
   const sameLayer = baseId === overlayId;
 
   useEffect(() => {
     if (mode !== "side-by-side" || sameLayer) {
-      clearClip(leftLayer);
-      clearClip(rightLayer);
+      clearClip(primaryLayer);
+      clearClip(secondaryLayer);
       return;
     }
 
     const apply = () => {
-      clipTileLayers(map, leftLayer, rightLayer, split);
+      clipTileLayers(map, primaryLayer, secondaryLayer, split, orientation);
     };
 
     apply();
@@ -85,10 +103,10 @@ export function MapCompareLayers({
       map.off("zoomend", apply);
       map.off("resize", apply);
       map.off("viewreset", apply);
-      clearClip(leftLayer);
-      clearClip(rightLayer);
+      clearClip(primaryLayer);
+      clearClip(secondaryLayer);
     };
-  }, [map, mode, split, sameLayer, leftLayer, rightLayer]);
+  }, [map, mode, split, orientation, sameLayer, primaryLayer, secondaryLayer]);
 
   if (mode === "opacity") {
     return (
@@ -109,15 +127,15 @@ export function MapCompareLayers({
   return (
     <>
       <BasemapTileLayer
-        key={`sbs-left-${baseId}`}
-        ref={setLeftLayer}
+        key={`sbs-primary-${baseId}`}
+        ref={setPrimaryLayer}
         layerId={baseId}
         zIndex={1}
       />
       {sameLayer ? null : (
         <BasemapTileLayer
-          key={`sbs-right-${overlayId}`}
-          ref={setRightLayer}
+          key={`sbs-secondary-${overlayId}`}
+          ref={setSecondaryLayer}
           layerId={overlayId}
           zIndex={2}
         />

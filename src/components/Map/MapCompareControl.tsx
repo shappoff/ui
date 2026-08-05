@@ -17,8 +17,7 @@ import {
   DrawerTrigger,
 } from "../Drawer";
 
-/** Matches `@media (min-width: 40rem)` desktop chrome in styles.css */
-const COMPARE_WIDE_MQ = "(min-width: 40rem)";
+import { useCompareWideViewport } from "./useCompareWideViewport";
 
 export type MapCompareControlProps = {
   overlay: TileLayerId;
@@ -48,23 +47,11 @@ export function MapCompareControl({
   const panelId = useId();
   const [overlayPickerOpen, setOverlayPickerOpen] = useState(false);
   const [panelOpen, setPanelOpen] = useState(false);
-  const [isWide, setIsWide] = useState(() =>
-    typeof window !== "undefined"
-      ? window.matchMedia(COMPARE_WIDE_MQ).matches
-      : false,
-  );
+  const isWide = useCompareWideViewport();
 
   const overlayLabel = TILE_LAYERS[overlay].label;
   const opacityPercent = Math.round(opacity * 100);
   const panelVisible = isWide || panelOpen;
-
-  useEffect(() => {
-    const media = window.matchMedia(COMPARE_WIDE_MQ);
-    const sync = () => setIsWide(media.matches);
-    sync();
-    media.addEventListener("change", sync);
-    return () => media.removeEventListener("change", sync);
-  }, []);
 
   useEffect(() => {
     if (!panelOpen || isWide || overlayPickerOpen) {
